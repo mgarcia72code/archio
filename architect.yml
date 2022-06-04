@@ -13,6 +13,9 @@ secrets:
   gunicorn_workers:
     description: Number of Gunicorn worker processes
     default: 4
+  grasswater:
+    description: xxxx
+    default: yyyy
 services:
   app:
     build:

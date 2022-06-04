@@ -1,13 +1,11 @@
-name: flask
+name: archio
 description: A starter component that uses Flask framework and SQLite database.
-
 keywords:
   - Flask
   - SQLite
   - Python
   - HTML
   - Gunicorn
-
 secrets:
   flask_env:
     description: Environment in which Flask application runs
@@ -15,26 +13,25 @@ secrets:
   gunicorn_workers:
     description: Number of Gunicorn worker processes
     default: 4
-
 services:
   app:
     build:
       context: ./
     interfaces:
-      main: &app-port 5000
+      main: 5000
     environment:
-      FLASK_ENV: ${{ secrets.flask_env }}
-      FLASK_PORT: *app-port
+      FLASK_ENV: '${{ secrets.flask_env }}'
+      FLASK_PORT: 5000
     command:
       - sh
-      - -c
-      - |
-        gunicorn -w ${{ secrets.gunicorn_workers }} -b 0.0.0.0:${{ services.app.interfaces.main.port }} "flaskr:create_app()"
-    ${{ if architect.environment == 'local' }}:
+      - '-c'
+      - >
+        gunicorn -w ${{ secrets.gunicorn_workers }} -b 0.0.0.0:${{
+        services.app.interfaces.main.port }} "flaskr:create_app()"
+    '${{ if architect.environment == ''local'' }}':
       command: python3 app.py
-
 interfaces:
   app:
-    url: ${{ services.app.interfaces.main.url }}
+    url: '${{ services.app.interfaces.main.url }}'
     ingress:
       subdomain: app

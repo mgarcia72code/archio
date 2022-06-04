@@ -25,6 +25,7 @@ services:
     environment:
       FLASK_ENV: '${{ secrets.flask_env }}'
       FLASK_PORT: 5000
+      grasswater: '${{ secrets.grasswater }}'
     command:
       - sh
       - '-c'
